@@ -19,16 +19,21 @@ export function Hero() {
     getReducedMotion,
     () => false,
   );
-  const showModes = useSyncExternalStore(subscribeModes, getModes, () => false);
+  const pinnedModes = useSyncExternalStore(subscribeModes, getModes, () => false);
   const [gain, setGain] = useState(0.62);
+  const [hoverModes, setHoverModes] = useState(false);
+  const [keyHint, setKeyHint] = useState(false);
+  const [looped, setLooped] = useState(false);
   const fadeRefs = useMemo(() => [taglineRef, navRef], []);
+  const showModes = pinnedModes || hoverModes || (keyHint && !looped);
 
   const { paramsRef, mode, auto, hold, play, cycle } = useHeroLoop({
     titleRef,
     fadeRefs,
     fieldRef,
     reduced,
-    showModes,
+    onLooped: () => setLooped(true),
+    onKeyHint: () => setKeyHint(true),
   });
 
   useField(fieldRef, reduced, setGain);
@@ -69,31 +74,36 @@ export function Hero() {
             </p>
           </div>
 
-          <div className="flex w-full max-w-xl flex-col items-center gap-8 pb-10">
-            {showModes && (
-              <div
-                className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2"
-                role="group"
-                aria-label="Signal state"
-              >
+          <div
+            className="flex w-full max-w-xl flex-col items-center gap-8 pb-10"
+            onPointerEnter={() => setHoverModes(true)}
+            onPointerLeave={() => setHoverModes(false)}
+          >
+            <div
+              className={`flex h-5 flex-wrap items-center justify-center gap-x-5 transition-opacity duration-300 ${
+                showModes ? "opacity-100" : "opacity-0"
+              }`}
+              role="group"
+              aria-label="Signal state"
+              aria-hidden={!showModes}
+            >
+              <ModeButton
+                label="Auto"
+                active={auto && !reduced}
+                onClick={play}
+                disabled={reduced || !showModes}
+              />
+              {STATES.map((state) => (
                 <ModeButton
-                  label="Auto"
-                  active={auto && !reduced}
-                  onClick={play}
-                  disabled={reduced}
+                  key={state}
+                  label={state}
+                  active={!auto && mode === state}
+                  current={auto && mode === state}
+                  onClick={() => hold(state)}
+                  disabled={reduced || !showModes}
                 />
-                {STATES.map((state) => (
-                  <ModeButton
-                    key={state}
-                    label={state}
-                    active={!auto && mode === state}
-                    current={auto && mode === state}
-                    onClick={() => hold(state)}
-                    disabled={reduced}
-                  />
-                ))}
-              </div>
-            )}
+              ))}
+            </div>
 
             <RadioGain
               gain={gain}

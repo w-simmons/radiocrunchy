@@ -22,7 +22,8 @@ type UseHeroLoopArgs = {
   fadeRefs: RefObject<HTMLElement | null>[];
   fieldRef: RefObject<FieldInput>;
   reduced: boolean;
-  showModes: boolean;
+  onLooped?: () => void;
+  onKeyHint?: () => void;
 };
 
 export function useHeroLoop({
@@ -30,7 +31,8 @@ export function useHeroLoop({
   fadeRefs,
   fieldRef,
   reduced,
-  showModes,
+  onLooped,
+  onKeyHint,
 }: UseHeroLoopArgs) {
   const paramsRef = useRef<HeroParams>(createHeroParams());
   const [mode, setMode] = useState<HeroState>(reduced ? "idle" : "load");
@@ -38,6 +40,13 @@ export function useHeroLoop({
   const mainRef = useRef<gsap.core.Timeline | null>(null);
   const beatRef = useRef<gsap.core.Timeline | null>(null);
   const needleRef = useRef<gsap.core.Timeline | null>(null);
+  const onLoopedRef = useRef(onLooped);
+  const onKeyHintRef = useRef(onKeyHint);
+
+  useEffect(() => {
+    onLoopedRef.current = onLooped;
+    onKeyHintRef.current = onKeyHint;
+  }, [onKeyHint, onLooped]);
 
   const applyDom = useCallback(() => {
     const p = paramsRef.current;
@@ -152,6 +161,7 @@ export function useHeroLoop({
     const main = gsap.timeline({
       repeat: -1,
       onUpdate: applyDom,
+      onRepeat: () => onLoopedRef.current?.(),
     });
 
     main
@@ -248,21 +258,33 @@ export function useHeroLoop({
   }, [applyDom, fieldRef, reduced]);
 
   useEffect(() => {
-    if (reduced || !showModes) return;
+    if (reduced) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
       const target = event.target as HTMLElement | null;
       if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA")) {
         return;
       }
-      if (event.key === "1") hold("load");
-      if (event.key === "2") hold("idle");
-      if (event.key === "3") hold("crisp");
-      if (event.key === "a" || event.key === "A") play();
+      if (event.key === "1") {
+        onKeyHintRef.current?.();
+        hold("load");
+      }
+      if (event.key === "2") {
+        onKeyHintRef.current?.();
+        hold("idle");
+      }
+      if (event.key === "3") {
+        onKeyHintRef.current?.();
+        hold("crisp");
+      }
+      if (event.key === "a" || event.key === "A") {
+        onKeyHintRef.current?.();
+        play();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [hold, play, reduced, showModes]);
+  }, [hold, play, reduced]);
 
   return { paramsRef, mode, auto, hold, play, cycle };
 }

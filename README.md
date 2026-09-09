@@ -20,7 +20,7 @@ pnpm build
 pnpm start
 ```
 
-Signal debug chrome (AUTO / LOAD / IDLE / CRISP): `/?modes=1`
+Signal chrome (AUTO / LOAD / IDLE / CRISP) stays out of the way: hover the bottom of the hero, or keys `A` `1` `2` `3`. It hides after the first loop. Pin with `/?modes=1`.
 
 ## Hero
 
