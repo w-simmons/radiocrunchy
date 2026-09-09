@@ -9,11 +9,11 @@ export default function Home() {
   return (
     <main className="relative">
       <Hero />
-      <div id="work" className="mx-auto w-full max-w-6xl">
+      <div id="work" className="relative z-10 mx-auto w-full max-w-6xl">
         <Lanes />
         <Products />
       </div>
-      <div className="mx-auto w-full max-w-6xl">
+      <div className="relative z-10 mx-auto w-full max-w-6xl">
         <Team />
         <Contact />
         <SiteFooter />

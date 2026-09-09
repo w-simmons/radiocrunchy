@@ -1,9 +1,13 @@
 export const colors = {
   ink: "#0B0B0C",
+  ink2: "#121214",
+  ink3: "#1C1B19",
   rice: "#F4F0E8",
   riceDim: "#A8A29A",
   panko: "#C4A574",
+  pankoHot: "#E4C58A",
   signal: "#E85D4C",
+  hairline: "color-mix(in srgb, #C4A574 38%, transparent)",
 } as const;
 
 export const copy = {
@@ -13,23 +17,7 @@ export const copy = {
   email: "will@willsimmons.net",
 } as const;
 
-export const lanes = [
-  {
-    index: "01",
-    name: "Consult",
-    body: "Scope, sequence, and the call — the work before we build.",
-  },
-  {
-    index: "02",
-    name: "Build",
-    body: "Design and engineering through to a live product.",
-  },
-  {
-    index: "03",
-    name: "Product",
-    body: "What we keep in market: GoVela and Stud.",
-  },
-] as const;
+export const lanes = ["Consult", "Build", "Product"] as const;
 
 export const products = [
   {

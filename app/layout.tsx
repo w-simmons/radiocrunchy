@@ -1,27 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow_Condensed, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { Host_Grotesk } from "next/font/google";
 import { GrainField } from "@/components/grain/GrainField";
 import { copy } from "@/lib/brand";
 import "./globals.css";
 
-const display = Barlow_Condensed({
+const host = Host_Grotesk({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-barlow",
-  display: "swap",
-});
-
-const body = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-plex",
-  display: "swap",
-});
-
-const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400"],
-  variable: "--font-plex-mono",
+  variable: "--font-host",
   display: "swap",
 });
 
@@ -51,11 +36,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${display.variable} ${body.variable} ${mono.variable} h-full bg-ink antialiased`}
-    >
-      <body className="min-h-full bg-ink text-rice">
+    <html lang="en" className={`${host.variable} h-full bg-ink antialiased`}>
+      <body className="min-h-full bg-ink font-sans text-rice">
         <a
           href="#work"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-3 focus:py-2 focus:text-rice"

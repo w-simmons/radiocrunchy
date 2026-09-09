@@ -8,6 +8,7 @@ import {
   type RefObject,
 } from "react";
 import { gsap, registerGsap } from "@/lib/gsap";
+import type { FieldInput } from "@/lib/field";
 import { BEAT_S, nextState, type HeroState } from "@/lib/motion";
 import {
   createHeroParams,
@@ -19,10 +20,18 @@ import {
 type UseHeroLoopArgs = {
   titleRef: RefObject<HTMLElement | null>;
   fadeRefs: RefObject<HTMLElement | null>[];
+  fieldRef: RefObject<FieldInput>;
   reduced: boolean;
+  showModes: boolean;
 };
 
-export function useHeroLoop({ titleRef, fadeRefs, reduced }: UseHeroLoopArgs) {
+export function useHeroLoop({
+  titleRef,
+  fadeRefs,
+  fieldRef,
+  reduced,
+  showModes,
+}: UseHeroLoopArgs) {
   const paramsRef = useRef<HeroParams>(createHeroParams());
   const [mode, setMode] = useState<HeroState>(reduced ? "idle" : "load");
   const [auto, setAuto] = useState(!reduced);
@@ -32,20 +41,21 @@ export function useHeroLoop({ titleRef, fadeRefs, reduced }: UseHeroLoopArgs) {
 
   const applyDom = useCallback(() => {
     const p = paramsRef.current;
+    p.gain = fieldRef.current.gain;
     const title = titleRef.current;
     if (title) {
       const punch = p.slam * 0.4 + p.kick * 0.2;
-      const ab = p.aberration + p.slam * 0.9 + p.kick * 0.45;
+      const split = p.split + p.slam * 0.9 + p.kick * 0.45;
       title.style.filter = `url(#ink-bleed) blur(${p.blur}px) contrast(${1.14 + punch})`;
       title.style.color = riceMix(p.typeDim);
       title.style.opacity = String(0.62 + (1 - p.typeDim) * 0.38);
-      title.style.transform = `scale(${1 + p.slam * 0.045 + p.kick * 0.012})`;
-      title.style.textShadow = `${-ab * 0.9}px 0 0 rgba(196,165,116,${0.28 + p.slam * 0.25}), ${ab}px 0.4px 0 rgba(232,93,76,${0.12 + p.kick * 0.12})`;
+      title.style.transform = `scaleX(0.72) scale(${1 + p.slam * 0.045 + p.kick * 0.012})`;
+      title.style.textShadow = `${-split * 0.9}px 0 0 rgba(196,165,116,${0.28 + p.slam * 0.25}), ${split}px 0.4px 0 rgba(232,93,76,${0.12 + p.kick * 0.12})`;
     }
     for (const ref of fadeRefs) {
       if (ref.current) ref.current.style.opacity = String(p.chrome);
     }
-  }, [fadeRefs, titleRef]);
+  }, [fadeRefs, fieldRef, titleRef]);
 
   const punchInto = useCallback(
     (state: HeroState) => {
@@ -74,6 +84,7 @@ export function useHeroLoop({ titleRef, fadeRefs, reduced }: UseHeroLoopArgs) {
     (state: HeroState) => {
       setAuto(false);
       setMode(state);
+      fieldRef.current.mode = state;
       mainRef.current?.pause();
       needleRef.current?.pause();
       punchInto(state);
@@ -88,15 +99,16 @@ export function useHeroLoop({ titleRef, fadeRefs, reduced }: UseHeroLoopArgs) {
         });
       }
     },
-    [punchInto],
+    [fieldRef, punchInto],
   );
 
   const play = useCallback(() => {
     setAuto(true);
     setMode("load");
+    fieldRef.current.mode = "load";
     needleRef.current?.pause();
     mainRef.current?.restart();
-  }, []);
+  }, [fieldRef]);
 
   const cycle = useCallback(() => {
     hold(nextState(mode));
@@ -113,6 +125,7 @@ export function useHeroLoop({ titleRef, fadeRefs, reduced }: UseHeroLoopArgs) {
         kick: 0,
         slam: 0,
       });
+      fieldRef.current.mode = "idle";
       applyDom();
       return;
     }
@@ -142,7 +155,10 @@ export function useHeroLoop({ titleRef, fadeRefs, reduced }: UseHeroLoopArgs) {
     });
 
     main
-      .call(() => setMode("load"))
+      .call(() => {
+        setMode("load");
+        fieldRef.current.mode = "load";
+      })
       .set(p, {
         ...STATE_TARGETS.load,
         needleX: 0.12,
@@ -164,7 +180,10 @@ export function useHeroLoop({ titleRef, fadeRefs, reduced }: UseHeroLoopArgs) {
         duration: 0.18,
         ease: "power2.in",
       })
-      .call(() => setMode("idle"))
+      .call(() => {
+        setMode("idle");
+        fieldRef.current.mode = "idle";
+      })
       .to(p, {
         ...STATE_TARGETS.idle,
         blur: 0,
@@ -186,6 +205,7 @@ export function useHeroLoop({ titleRef, fadeRefs, reduced }: UseHeroLoopArgs) {
       .to(p, { duration: BEAT_S * 8.6 })
       .call(() => {
         setMode("crisp");
+        fieldRef.current.mode = "crisp";
         p.needleX = 0.08;
       })
       .to(p, {
@@ -225,10 +245,10 @@ export function useHeroLoop({ titleRef, fadeRefs, reduced }: UseHeroLoopArgs) {
       beatRef.current = null;
       needleRef.current = null;
     };
-  }, [applyDom, reduced]);
+  }, [applyDom, fieldRef, reduced]);
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || !showModes) return;
     const onKey = (event: KeyboardEvent) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
       const target = event.target as HTMLElement | null;
@@ -242,7 +262,7 @@ export function useHeroLoop({ titleRef, fadeRefs, reduced }: UseHeroLoopArgs) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [hold, play, reduced]);
+  }, [hold, play, reduced, showModes]);
 
   return { paramsRef, mode, auto, hold, play, cycle };
 }

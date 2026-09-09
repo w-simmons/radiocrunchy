@@ -3,30 +3,25 @@ import { Reveal } from "@/components/motion/Reveal";
 
 export function Products() {
   return (
-    <section className="relative px-6 py-28 md:py-36">
-      <Reveal>
-        <p className="font-display text-[11px] tracking-[0.32em] text-panko uppercase">
-          Product
-        </p>
-      </Reveal>
-      <ul className="mt-12 divide-y divide-panko/40 border-y border-panko/40">
+    <section className="relative px-6 py-32 md:py-48">
+      <ul>
         {products.map((product, i) => (
-          <li key={product.name}>
-            <Reveal delay={i * 0.06}>
+          <li key={product.name} className="border-t border-hairline last:border-b">
+            <Reveal delay={i * 0.05}>
               <a
                 href={product.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col gap-3 py-10 transition-colors md:flex-row md:items-end md:justify-between md:py-14"
+                className="group flex flex-col gap-3 py-16 md:flex-row md:items-end md:justify-between md:py-20"
               >
                 <div>
-                  <h2 className="type-grit font-display text-5xl font-extrabold tracking-[0.04em] text-rice uppercase md:text-6xl">
+                  <h2 className="type-grit font-sans text-5xl font-extrabold tracking-[-0.03em] text-rice uppercase md:text-7xl">
                     {product.name}
                   </h2>
-                  <p className="mt-3 text-lg text-rice-dim">{product.line}</p>
+                  <p className="mt-4 text-lg text-rice-dim">{product.line}</p>
                 </div>
-                <span className="font-mono text-[12px] tracking-[0.08em] text-panko group-hover:text-rice">
-                  {product.href.replace(/^https?:\/\//, "")} →
+                <span className="text-sm tracking-[0.04em] text-panko group-hover:text-panko-hot">
+                  {product.href.replace(/^https?:\/\//, "")}
                 </span>
               </a>
             </Reveal>

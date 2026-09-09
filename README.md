@@ -1,12 +1,12 @@
 # Radio Crunchy
 
-Studio site for Radio Crunchy. Dark-signal radio, panko grain, 120bpm.
+Studio site. Dark-signal radio, panko grain, 120bpm.
 
 **Crunchy outside. Soft center.**
 
 ## Stack
 
-Next.js App Router · TypeScript · Tailwind CSS · GSAP ScrollTrigger · canvas hero
+Next.js App Router · TypeScript · Tailwind · GSAP ScrollTrigger · canvas hero
 
 ## Develop
 
@@ -20,42 +20,43 @@ pnpm build
 pnpm start
 ```
 
+Signal debug chrome (AUTO / LOAD / IDLE / CRISP): `/?modes=1`
+
 ## Hero
 
-The hero is a canvas waveform (vertical bars, not a sine) under a distressed condensed `RADIO CRUNCHY` mark — rock-poster grit, dense panko grain, crumb flecks, and a 120bpm kick. It runs three states:
+Condensed `RADIO CRUNCHY` over vertical amber bars. Three states at 120bpm:
 
 | State | Look |
 | --- | --- |
-| **Load** | Soft/blurred mark, thin signal waking |
-| **Idle** | Locked mark, amber bar field, tagline, Work / Talk + coral pip |
-| **Crisp** | Hotter amplitude and grain, tuner needle |
+| **Load** | Soft mark, thin signal, crumbs kick |
+| **Idle** | Locked mark, bars settle, crumbs drift home |
+| **Crisp** | Hot amplitude, tuner needle, crumbs burst |
 
-Auto-loop is default. Manual:
+Turn up / turn down is a real dial. Scroll velocity and pointer scatter crumbs. Waveform follows gain.
 
-- Click the mark to cycle
-- `AUTO` / `LOAD` / `IDLE` / `CRISP`
-- Keys `A`, `1`, `2`, `3`
-
-`prefers-reduced-motion: reduce` holds a static idle (grit stays, motion stops).
-
-Feel vs. the first cut: louder/thicker bars, hotter gold bloom, ink-bleed on the wordmark, dual grain + floating crumbs, beat-1 kick flash, and a slam from blur→razor on the load→idle lock. Same IA and canon copy.
+`prefers-reduced-motion: reduce` holds a static idle.
 
 ## Brand
 
 | Token | Hex |
 | --- | --- |
 | Ink | `#0B0B0C` |
+| Ink 2 | `#121214` |
+| Ink 3 | `#1C1B19` |
 | Rice | `#F4F0E8` |
 | Rice dim | `#A8A29A` |
 | Panko | `#C4A574` |
+| Panko hot | `#E4C58A` |
 | Signal | `#E85D4C` |
+| Hairline | panko at 38% |
 
-No blue SaaS. No sushi photography.
+Type: Host Grotesk. No blue SaaS. No sushi photography.
 
 ## Copy
 
-Canon only. Do not invent taglines. Do not claim live MLS, board distribution, or a formal CTO title.
+Canon only. No invented taglines. No live MLS, board distribution, CTO title, or C.J.
 
+- Consult · Build · Product
 - GoVela — “Agents who win.” — [govela.dev](https://govela.dev)
 - Stud — “The shelf for your cars.” — [bricktrail.vercel.app](https://bricktrail.vercel.app) only
 - Will — “Product. Agents. Ship.”
@@ -64,4 +65,4 @@ Canon only. Do not invent taglines. Do not claim live MLS, board distribution, o
 
 ## Deploy
 
-Vercel project `radiocrunchy` is already linked to this repo. Push to GitHub; Vercel builds from `pnpm build`.
+Vercel project `radiocrunchy`. `vercel.json` sets `framework: nextjs`.

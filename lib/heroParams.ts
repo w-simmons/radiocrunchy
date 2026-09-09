@@ -13,14 +13,15 @@ export type HeroParams = {
   beat: number;
   kick: number;
   slam: number;
-  aberration: number;
+  split: number;
+  gain: number;
 };
 
 export type HeroStateName = "load" | "idle" | "crisp";
 
 export const STATE_TARGETS: Record<
   HeroStateName,
-  Omit<HeroParams, "beat" | "needleX" | "kick" | "slam">
+  Omit<HeroParams, "beat" | "needleX" | "kick" | "slam" | "gain">
 > = {
   load: {
     amplitude: 0.2,
@@ -31,7 +32,7 @@ export const STATE_TARGETS: Record<
     chrome: 0,
     typeDim: 1,
     needleAlpha: 0,
-    aberration: 0.15,
+    split: 0.15,
   },
   idle: {
     amplitude: 1.04,
@@ -42,7 +43,7 @@ export const STATE_TARGETS: Record<
     chrome: 1,
     typeDim: 0,
     needleAlpha: 0,
-    aberration: 0.22,
+    split: 0.22,
   },
   crisp: {
     amplitude: 1.46,
@@ -53,7 +54,7 @@ export const STATE_TARGETS: Record<
     chrome: 1,
     typeDim: 0,
     needleAlpha: 1,
-    aberration: 0.55,
+    split: 0.55,
   },
 };
 
@@ -64,6 +65,7 @@ export function createHeroParams(): HeroParams {
     beat: 0,
     kick: 0,
     slam: 0,
+    gain: 0.62,
   };
 }
 

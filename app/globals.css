@@ -2,21 +2,27 @@
 
 :root {
   --ink: #0b0b0c;
+  --ink-2: #121214;
+  --ink-3: #1c1b19;
   --rice: #f4f0e8;
   --rice-dim: #a8a29a;
   --panko: #c4a574;
+  --panko-hot: #e4c58a;
   --signal: #e85d4c;
+  --hairline: color-mix(in srgb, #c4a574 38%, transparent);
 }
 
 @theme inline {
   --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
   --color-rice: var(--rice);
   --color-rice-dim: var(--rice-dim);
   --color-panko: var(--panko);
+  --color-panko-hot: var(--panko-hot);
   --color-signal: var(--signal);
-  --font-sans: var(--font-plex);
-  --font-display: var(--font-barlow);
-  --font-mono: var(--font-plex-mono);
+  --color-hairline: var(--hairline);
+  --font-sans: var(--font-host);
 }
 
 html {
@@ -28,7 +34,7 @@ html {
 body {
   background: var(--ink);
   color: var(--rice);
-  font-family: var(--font-plex), sans-serif;
+  font-family: var(--font-host), sans-serif;
   min-height: 100%;
 }
 
@@ -149,6 +155,6 @@ body {
   }
 
   .mark {
-    transform: none !important;
+    transform: scaleX(0.72) !important;
   }
 }
