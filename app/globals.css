@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #0b0b0c;
+  --rice: #f4f0e8;
+  --rice-dim: #a8a29a;
+  --panko: #c4a574;
+  --signal: #e85d4c;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-rice: var(--rice);
+  --color-rice-dim: var(--rice-dim);
+  --color-panko: var(--panko);
+  --color-signal: var(--signal);
+  --font-sans: var(--font-plex);
+  --font-display: var(--font-barlow);
+  --font-mono: var(--font-plex-mono);
+}
+
+html {
+  background: var(--ink);
+  color: var(--rice);
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ink);
+  color: var(--rice);
+  font-family: var(--font-body), sans-serif;
+  min-height: 100%;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--panko) 35%, transparent);
+  color: var(--rice);
+}
+
+.grain-field {
+  opacity: 0.22;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  animation: grain-drift 0.8s steps(2) infinite;
+}
+
+.signal-pip {
+  display: inline-block;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: var(--signal);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--signal) 55%, transparent);
+  animation: pip 500ms cubic-bezier(0.16, 0.84, 0.32, 1) infinite;
+}
+
+@keyframes grain-drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-2%, 1%, 0);
+  }
+  100% {
+    transform: translate3d(1%, -2%, 0);
+  }
+}
+
+@keyframes pip {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  18% {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+  100% {
+    opacity: 0.62;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .grain-field,
+  .signal-pip {
+    animation: none;
+  }
+}
