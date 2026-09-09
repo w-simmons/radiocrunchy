@@ -12,11 +12,11 @@ export function Lanes() {
       <div className="mt-12 grid gap-12 md:grid-cols-3 md:gap-16">
         {lanes.map((lane, i) => (
           <Reveal key={lane.name} delay={i * 0.08}>
-            <article className="border-t border-panko/25 pt-6">
+            <article className="border-t border-panko/45 pt-6">
               <p className="font-mono text-[11px] tracking-[0.28em] text-panko">
                 {lane.index}
               </p>
-              <h2 className="font-display mt-4 text-4xl font-bold tracking-[0.06em] text-rice uppercase md:text-5xl">
+              <h2 className="type-grit font-display mt-4 text-4xl font-extrabold tracking-[0.05em] text-rice uppercase md:text-5xl">
                 {lane.name}
               </h2>
               <p className="mt-5 max-w-xs text-[0.98rem] leading-7 text-rice-dim">

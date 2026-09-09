@@ -45,15 +45,16 @@ export function Hero() {
           >
             <h1
               ref={titleRef}
-              className="font-display text-center text-[clamp(3rem,11.6vw,8.75rem)] font-extrabold leading-none tracking-[0.045em] text-rice-dim uppercase"
-              style={{ filter: "blur(16px)" }}
+              data-text={copy.mark}
+              className="mark font-display text-center text-[clamp(3.2rem,12.5vw,9.35rem)] font-extrabold leading-none tracking-[0.03em] text-rice-dim uppercase"
+              style={{ filter: "url(#ink-bleed) blur(18px)" }}
             >
               {copy.mark}
             </h1>
           </button>
           <p
             ref={taglineRef}
-            className="mt-5 text-center text-[0.98rem] font-normal tracking-tight text-rice opacity-0 md:text-[1.05rem]"
+            className="mt-6 text-center text-[0.98rem] font-normal tracking-tight text-rice opacity-0 md:text-[1.05rem]"
           >
             {copy.tagline}
           </p>

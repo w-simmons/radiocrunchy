@@ -8,7 +8,7 @@ export function Contact() {
         <p className="font-display text-[11px] tracking-[0.32em] text-panko uppercase">
           Contact
         </p>
-        <h2 className="font-display mt-8 max-w-4xl text-5xl font-bold leading-[0.95] tracking-[0.02em] text-rice md:text-7xl">
+        <h2 className="type-grit font-display mt-8 max-w-4xl text-5xl font-extrabold leading-[0.95] tracking-[0.02em] text-rice md:text-7xl">
           {copy.contact}
         </h2>
         <a

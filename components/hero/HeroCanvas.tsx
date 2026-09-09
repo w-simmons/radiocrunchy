@@ -2,7 +2,12 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import { gsap } from "@/lib/gsap";
-import { createGrainTile, drawHero } from "@/lib/heroDraw";
+import {
+  createCrumbTile,
+  createCrumbs,
+  createGrainTile,
+  drawHero,
+} from "@/lib/heroDraw";
 import type { HeroParams } from "@/lib/heroParams";
 
 type HeroCanvasProps = {
@@ -19,7 +24,11 @@ export function HeroCanvas({ paramsRef, reduced }: HeroCanvasProps) {
     const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
 
-    const grain = createGrainTile();
+    const textures = {
+      fine: createGrainTile(),
+      crumb: createCrumbTile(),
+      crumbs: createCrumbs(),
+    };
     const shift = { x: 0, y: 0 };
     let width = 0;
     let height = 0;
@@ -40,10 +49,10 @@ export function HeroCanvas({ paramsRef, reduced }: HeroCanvasProps) {
       const p = paramsRef.current;
       const time = (performance.now() - start) / 1000;
       if (!reduced) {
-        shift.x = (time * 14) % grain.width;
-        shift.y = (time * 9) % grain.height;
+        shift.x = (time * 22) % textures.fine.width;
+        shift.y = (time * 13) % textures.fine.height;
       }
-      drawHero(ctx, width, height, p, time, grain, shift);
+      drawHero(ctx, width, height, p, time, textures, shift);
     };
 
     resize();

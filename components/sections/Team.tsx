@@ -13,7 +13,7 @@ export function Team() {
         {team.map((person, i) => (
           <Reveal key={person.name} delay={i * 0.08}>
             <article>
-              <h2 className="font-display text-6xl font-bold tracking-[0.06em] text-rice uppercase md:text-7xl">
+              <h2 className="type-grit font-display text-6xl font-extrabold tracking-[0.05em] text-rice uppercase md:text-7xl">
                 {person.name}
               </h2>
               <p className="mt-4 text-lg text-rice-dim">{person.line}</p>

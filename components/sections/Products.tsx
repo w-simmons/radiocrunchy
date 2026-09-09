@@ -9,7 +9,7 @@ export function Products() {
           Product
         </p>
       </Reveal>
-      <ul className="mt-12 divide-y divide-panko/20 border-y border-panko/20">
+      <ul className="mt-12 divide-y divide-panko/40 border-y border-panko/40">
         {products.map((product, i) => (
           <li key={product.name}>
             <Reveal delay={i * 0.06}>
@@ -20,7 +20,7 @@ export function Products() {
                 className="group flex flex-col gap-3 py-10 transition-colors md:flex-row md:items-end md:justify-between md:py-14"
               >
                 <div>
-                  <h2 className="font-display text-5xl font-bold tracking-[0.05em] text-rice uppercase md:text-6xl">
+                  <h2 className="type-grit font-display text-5xl font-extrabold tracking-[0.04em] text-rice uppercase md:text-6xl">
                     {product.name}
                   </h2>
                   <p className="mt-3 text-lg text-rice-dim">{product.line}</p>

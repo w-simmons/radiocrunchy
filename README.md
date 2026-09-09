@@ -22,7 +22,7 @@ pnpm start
 
 ## Hero
 
-The hero is a canvas waveform (vertical bars, not a sine) under condensed `RADIO CRUNCHY`. It runs three states on a 120bpm grid (500ms):
+The hero is a canvas waveform (vertical bars, not a sine) under a distressed condensed `RADIO CRUNCHY` mark — rock-poster grit, dense panko grain, crumb flecks, and a 120bpm kick. It runs three states:
 
 | State | Look |
 | --- | --- |
@@ -36,7 +36,9 @@ Auto-loop is default. Manual:
 - `AUTO` / `LOAD` / `IDLE` / `CRISP`
 - Keys `A`, `1`, `2`, `3`
 
-`prefers-reduced-motion: reduce` holds a static idle.
+`prefers-reduced-motion: reduce` holds a static idle (grit stays, motion stops).
+
+Feel vs. the first cut: louder/thicker bars, hotter gold bloom, ink-bleed on the wordmark, dual grain + floating crumbs, beat-1 kick flash, and a slam from blur→razor on the load→idle lock. Same IA and canon copy.
 
 ## Brand
 
